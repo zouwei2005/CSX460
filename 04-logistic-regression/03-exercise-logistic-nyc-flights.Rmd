@@ -37,6 +37,11 @@ KNIT YOUR DOCUMENT AS *HTML* AND SUBMIT IT AND THE `Rmd` file.
 ## Step 1: Collect Data 
 
 ```{r "Step 1: Collect Data" }
+setwd("C:/Users/homeguest01/CSX460/04-logistic-regression")
+library("readr")
+YX <- read_csv("YX.csv")
+spec(YX)
+
 
 ```
 
@@ -47,12 +52,23 @@ One of the things not done in the MLwR text is a pairwise comparison between the
 
 
 ```{r "Step 2: Explore and Prep The Data" }
+str(YX$arr_delay)
+summary(YX$arr_delay)
+YX$arr_delay_cat <- cut(YX$arr_delay,
+                     breaks=c(-Inf, 15, Inf),
+                     labels=c("short","long"))
+YX$arr_delay_cat2 <- cut(YX$arr_delay,
+                     breaks=c(-Inf, 15, Inf),
+                     labels=c("0","1"))
+plot(arr_delay_cat ~ dep_delay, data=YX)
 
 ```
 
 ## Step 3:  Train The Model
 
 ```{r "Step 3: Train The Model" }
+glm.output1 = glm(arr_delay_cat ~ dep_delay, family=binomial(logit), data=YX)
+#glm.output2 = glm(arr_delay_cat ~ ., family=binomial(logit), data=YX)
 
 ```
 
@@ -61,6 +77,8 @@ One of the things not done in the MLwR text is a pairwise comparison between the
 Think about some of the tools that you have for evaluating performance.  Choose one and articulate why you have chosen it.
 
 ```{r "Step 4: Evaluate Performance" }
+summary(glm.output1)
+summary(glm.output1)
 
 ```
 
