@@ -18,23 +18,29 @@ for building a model. Describe/Explain each of the steps and show all work in co
 ## Step 1: Collect Data 
 
 ```{r "Step 1: Collect Data" }
-
+setwd("/Users/weizou/Desktop/CSX460/03-linear-regression")
+library("readr")
+YX <- read_csv("YX.csv")
+spec(YX)
 ```
 
 ## Step 2: Explore and Prep The Data
-
 
 One of the things not done in the MLwR text is a pairwise comparison between the response and each of the predictors. Make sure to do this; this is often very illustrative of the relationship between that predictor and the response. This can be done with `pairs` or `psych::panel.pairs`
 
 
 ```{r "Step 2: Explore and Prep The Data" }
-
+str(YX)
+summary(YX$arr_delay)
+hist(YX$arr_delay)
+cor(YX[c("year", "month", "day", "hour", "dep_time", "sched_dep_time", "dep_delay", "arr_time", "sched_arr_time", "flight", "air_time", "distance", "minute", "wind_dir", "temp", "dewp", "humid", "wind_speed", "wind_gust", "precip", "pressure", "arr_delay")], use="complete")
+pairs(YX[c("dep_time", "sched_dep_time", "dep_delay", "arr_time", "sched_arr_time", "arr_delay")], use="complete")
 ```
 
 ## Step 3:  Train The Model
 
 ```{r "Step 3: Train The Model" }
-
+YX_model <- lm(arr_delay ~ ., data = YX)
 ```
 
 ## Step 4: Evaluate Performance
